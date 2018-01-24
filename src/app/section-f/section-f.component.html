@@ -1,0 +1,199 @@
+<div class="container col-md-12">
+    <div class="row">
+
+        <hr />
+        <h3>Do you authorize someone to represent you in this application? If so, please tell us about your authorized representative.</h3>
+        <br />
+    </div>
+    <form role="form" name="frmSectionF" [formGroup]="userForm">
+        <div>
+            <!--row 1 name-->
+            <div class="row">
+
+                <div class="form-group col-md-3">
+                    <label for="txtFirstName">
+                        First Name: <span class="req" *ngIf="isFieldValid('firstName')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" type="text" formControlName="firstName" placeholder="First Name" id="txtFirstName" name="FirstName" data-ng-model="sectionF.firstName" maxlength="12"  />
+                    <app-field-error [displayError]="isFieldValid('firstName')" errorMsg="firstName is required"></app-field-error>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtFirstName">
+                        Middle Name:
+                    </label>
+                    <input class="form-control" type="text" formControlName="middleName" placeholder="Middle Name" id="txtMiddleNameSpouse" name="MiddleNameSpouse"
+                           data-ng-model="sectionF.middleName" maxlength="10" alpha-only />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtLastName">
+                        Last Name: <span class="req" *ngIf="isFieldValid('lastName')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" type="text" formControlName="firstName" placeholder="Last Name" id="txtLastName" name="LastName" data-ng-model="sectionF.lastName" maxlength="19"  />
+                    <app-field-error [displayError]="isFieldValid('firstName')" errorMsg="Last Name is required"></app-field-error>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtSuffixSpouse">
+                        Suffix:
+                    </label>
+                    <input class="form-control" formControlName="suffix" type="text" placeholder="Jr.,Sr.,etc." id="txtSuffixSpouse" name="SuffixSpouse"
+                           data-ng-model="sectionF.suffix" maxlength="4" />
+                </div>
+            </div>
+            <!--row 2 address street-->
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <label for="txtStreetAddress">
+                        Street: <span class="req" *ngIf="isFieldValid('street')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" formControlName="street" type="text" placeholder="Street Address" id="txtStreetAddress" name="StreetAddress"  />
+                    <app-field-error [displayError]="isFieldValid('street')" errorMsg="Street Address is required."></app-field-error>
+                </div>
+            </div>
+            <!--row 3 city state zip-->
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label for="txtCity">
+                        City: <span class="req" *ngIf="isFieldValid('city')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" formControlName="city" type="text" placeholder="City" id="txtCity" name="City" data-ng-model="sectionF.city" maxlength="30"  />
+                    <app-field-error [displayError]="isFieldValid('city')" errorMsg="City is required."></app-field-error>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="ddlState">
+                        State: <span class="req" *ngIf="isFieldValid('state')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <div class="controls">
+                        <select class="form-control" id="ddlState" formControlName="state" name="State" >
+                            <option value="">Please Select One</option>
+                        </select>
+                        <app-field-error [displayError]="isFieldValid('state')" errorMsg="state is required."></app-field-error>
+                    </div>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label for="txtZipCodeSpouse">
+                        ZIP: <span class="req" *ngIf="isFieldValid('zipCode')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input id="txtZipCodeSpouse" class="form-control"  name="ZipCode" type="text" formControlName="zipCode"
+                           placeholder="ZIP" />
+                    <small class="error-msg" data-ng-show="frmSectionF.ZipCode.$error.zipFormat && (frmSectionF.ZipCode.$touched || formInvalid)">Zip Code is Invalid</small>
+                    <app-field-error [displayError]="isFieldValid('zipCode')" errorMsg="Zip Code is required."></app-field-error>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6" ng-if="(appType!='9709Sand257' && appType!='9709S') ">
+                    <label for="txtHomeTelephoneSpouse">
+                        Home #: <span class="req" *ngIf="isFieldValid('phoneHome')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" formControlName="phoneHome" type="text" phone-formatter placeholder="Home #" id="txtHomeTelephoneSpouse" name="HomeSpouse" title="Telephone"  />
+                    <small class="error-msg" >
+                        Invalid Home #
+                    </small>
+                    <app-field-error [displayError]="isFieldValid('phoneHome')" errorMsg="Home# is required."></app-field-error>
+                    <label for="txtWorkTelephoneSpouse">
+                        Work #: <span class="req" *ngIf="isFieldValid('phoneWork')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" formControlName="phoneWork" type="text" phone-formatter ng-model="sectionF.workPhone" placeholder="Work #" id="txtWorkTelephoneSpouse" name="WorkSpouse" title="Telephone" ng-required="(sectionF.firstName || sectionF.lastName) && (!sectionF.homePhone && !sectionF.cellPhone)" ng-class="{'missing-req':(sectionF.firstName || sectionF.lastName) && (!sectionF.homePhone && !sectionF.cellPhone) && (frmSectionF.WorkSpouse.$invalid && frmSectionF.WorkSpouse.$touched)}" />
+                    <small class="error-msg" >
+                        Invalid Work #
+                    </small>
+                    <app-field-error [displayError]="isFieldValid('phoneWork')" errorMsg="Work # is required."></app-field-error>
+                    <label for="txtCellTelephoneSpouse">
+                        Cell #: <span class="req" *ngIf="isFieldValid('phoneCell')">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" type="text" phone-formatter ng-model="sectionF.cellPhone" placeholder="Cell #" id="txtCellTelephoneSpouse" name="cellSpouse" title="Telephone" ng-required="(sectionF.firstName || sectionF.lastName) && (!sectionF.homePhone && !sectionF.workPhone)" ng-class="{'missing-req':(sectionF.firstName || sectionF.lastName) && (!sectionF.homePhone && !sectionF.workPhone) && (frmSectionF.cellSpouse.$invalid && frmSectionF.cellSpouse.$touched)}" />
+                    <small class="error-msg" data-ng-show="frmSectionF.cellSpouse.$error.phoneFormat && (frmSectionF.cellSpouse.$touched || formInvalid)">
+                        Invalid Cell #
+                    </small>
+                    <app-field-error [displayError]="isFieldValid('phoneCell')" errorMsg="Cell # is required."></app-field-error>
+                </div>
+                <div class="form-group col-sm-6" ng-if="appType=='9709Sand257' || appType =='9709S'">
+                    <label for="txtTelephoneSpouse">
+                        Telephone #: <span class="req" data-ng-show="sectionF.firstName || sectionF.lastName">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <input class="form-control" type="text" phone-formatter ng-model="sectionF.homePhone" placeholder="Telephone #" id="txtTelephoneSpouse" name="TelephoneSpouse" title="Telephone" ng-required="sectionF.firstName || sectionF.lastName" ng-class="{'missing-req': (sectionF.firstName || sectionF.lastName) && (frmSectionF.TelephoneSpouse.$invalid && frmSectionF.TelephoneSpouse.$touched)}" />
+                    <small class="error-msg" data-ng-show="(sectionF.firstName || sectionF.lastName) && (frmSectionF.TelephoneSpouse.$invalid && frmSectionF.TelephoneSpouse.$touched)">Invalid Telephone #</small>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="relationship">
+                        What is the Authorized Representative’s relationship to you?&nbsp;<span class="req" data-ng-show="sectionF.firstName || sectionF.lastName">* <span class="sr-only">Required</span></span>
+                    </label>
+                    <div class="controls">
+                        <select class="form-control" id="relationship" data-ng-model="sectionF.relationship" name="Relationship" data-ng-options="rel.value as rel.text for rel in relationshipsToYou | orderBy:'text'" ng-required="sectionF.firstName || sectionF.lastName" ng-class="{'missing-req':(sectionF.firstName || sectionF.lastName) && (frmSectionF.Relationship.$invalid && frmSectionF.Relationship.$touched)}">
+                            <option value="">Please Select One</option>
+                        </select>
+                        <small class="error-msg" data-ng-show="(sectionF.firstName || sectionF.lastName) && (frmSectionF.Relationship.$invalid && frmSectionF.Relationship.$touched)">
+                            Relationship is required.
+                        </small>
+                    </div>
+                    <div class="form-group" id="" ng-show="sectionF.relationship == 'SP'">
+
+                        <label class="control-label" for="numRegSSN">
+                            Spouse’s Social Security Number:<span class="req" data-ng-show="apps.addSsn.required">*<span class="sr-only">Required</span></span>
+                        </label>
+                        <input class="form-control" id="numRegSSN" name="addSsn" data-ng-model="sectionF.maskedSSN" ssn-formatter un-masked="sectionF.formttedSpouseSSN"
+                               data-ng-required="apps.addSsn.required" formatted-un-masked="sectionF.spouseSSN" eye="openEye"
+                               data-ng-class="{'missing-req': (frmSectionF.addSsn.$invalid && (frmSectionF.addSsn.$touched || frmSectionF.$invalid))}" />
+
+                        <div class="maskWrapper">
+                            <button type="button" class="btn-link btn-mask" id="btnShowNumber" data-ng-init="openEye = true" name="ShowNumber" title="Show ID Number" data-ng-click="toggleaddSsn()">
+                                <span id="openEyeHeadOfHousehold" bs-tooltip placement="top" title="Show ID Number" container="body" data-ng-show="openEye" class="no-ani">
+                                    <span class="glyphicon glyphicon-eye-open"></span><span class="sr-only">Show ID number</span>
+                                </span>
+                                <span id="closeEyeHeadOfHousehold" bs-tooltip placement="top" title="Hide ID Number" container="body" data-ng-show="!openEye" class="no-ani">
+                                    <span class="glyphicon glyphicon-eye-close"></span><span class="sr-only">Hide ID number</span>
+                                </span>
+                            </button>
+                        </div>
+                        <small class="error-msg" data-ng-show="(frmSectionF.addSsn.$invalid && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)) && apps.addSsn.required">Additional Social Security Number is required</small>
+                        <small class="error-msg" data-ng-show="!frmSectionF.addSsn.$error.firstDigitNine && !frmSectionF.addSsn.$error.firstThreeZeros && !frmSectionF.addSsn.$error.firstThreeSixes && !frmSectionF.addSsn.$error.fourFiveZeros && !frmSectionF.addSsn.$error.sixTillNineZeroes && frmSectionF.addSsn.$error.ssnFormat && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)">Social Security Number is not valid</small>
+                        <small class="error-msg" data-ng-show="frmSectionF.addSsn.$error.firstDigitNine && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)">SSN should not start with '9'</small>
+                        <small class="error-msg" data-ng-show="!frmSectionF.addSsn.$error.firstDigitNine && !frmSectionF.addSsn.$error.firstThreeSixes && frmSectionF.addSsn.$error.firstThreeZeros && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)">First 3 digits of SSN should not be '000'</small>
+                        <small class="error-msg" data-ng-show="!frmSectionF.addSsn.$error.firstDigitNine && !frmSectionF.addSsn.$error.firstThreeZeros && frmSectionF.addSsn.$error.firstThreeSixes && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)">First 3 digits of SSN should not be '666'</small>
+                        <small class="error-msg" data-ng-show="!frmSectionF.addSsn.$error.firstDigitNine && !frmSectionF.addSsn.$error.firstThreeZeros && !frmSectionF.addSsn.$error.firstThreeSixes && frmSectionF.addSsn.$error.fourFiveZeros && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)">4 and 5 digits of SSN should not be '00'</small>
+                        <small class="error-msg" data-ng-show="!frmSectionF.addSsn.$error.firstDigitNine && !frmSectionF.addSsn.$error.firstThreeZeros && !frmSectionF.addSsn.$error.firstThreeSixes && !frmSectionF.addSsn.$error.fourFiveZeros && frmSectionF.addSsn.$error.sixTillNineZeroes && (frmSectionF.addSsn.$touched || frmSectionF.$invalid)">6 through 9 digits of SSN should not be '0000'</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--fieldset class="little-field form-group col-sm-6">
+                    <legend>Do you or your spouse own this home?</legend>
+                    <div class="form-group">
+                        <ng-form name="OwnThisHomeYes">
+                            <input type="radio" class="radio radio-inline" name="ownThisHome" id="ownThisHomeYes" data-ng-model="sectionF.ownHome" value="Y" />
+                            <label for="ownThisHomeYes">Yes</label>
+                        </ng-form>
+                        <ng-form name="OwnThisHomeNo">
+                            <input type="radio" class="radio radio-inline" name="ownThisHome" id="ownThisHomeNo" data-ng-model="sectionF.ownHome" value="N" />
+                            <label for="ownThisHomeNo">No</label>
+                        </ng-form>
+                    </div>
+                </fieldset-->
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Delay Message Confirmation Modal -->
+
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="delayMessage" tabindex="-1" role="dialog" aria-labelledby="delayMessage" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="submitTitle">Delay Message</h4>
+            </div>
+            <div class="modal-body">
+                <label>Failure to provide <b>{{requiredFields}}</b> will delay the Application Processing Time.</label>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="button" class="btn btn-default last-modal-btn" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary last-modal-btn" data-dismiss="modal" (click)="onSubmit();" id="btnSaveandClose">
+                        Ok&nbsp;<span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
